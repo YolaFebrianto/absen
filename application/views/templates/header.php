@@ -21,12 +21,6 @@
 		div.disclaimer{
 		    display: none;
 		}
-		.datepicker{
-z-index: 1100 !important;
-}
-#ui-datepicker-div {
-width: 30% !important;
-}
 	</style>
 </head>
 <body class="hold-transition skin-blue-light layout-top-nav">
@@ -64,7 +58,7 @@ width: 30% !important;
 
 		<section class="content">
 			<div class="box box-primary">
-				<div class="box-body" style="overflow-x:scroll;">
+				<div class="box-body">
 					<?php if($this->session->flashdata('info') != null): ?>
 					<div class="alert alert-info alert-dismissible">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
