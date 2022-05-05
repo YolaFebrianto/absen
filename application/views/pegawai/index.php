@@ -1,54 +1,42 @@
-<?php require_once 'header.php'; ?>
-<div class="row">
-	<div class="col-md-3 col-xs-6">
-		<div class="thumbnail">
-			<a href="<?php echo base_url('pengguna/form_data_pegawai'); ?>">
-				<img src="<?=base_url();?>template/dist/img/form_data_pegawai.png" style="width:100%;max-height:290px;">
-				<div class="caption">
-					<p style="text-align: center;font-weight:bold;font-size:14px;line-height:14px;height:28px;">Form Data Pegawai</p>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-md-3 col-xs-6">
-		<div class="thumbnail">
-			<a href="<?php echo base_url('pengguna/data_pegawai'); ?>">
-				<img src="<?=base_url();?>template/dist/img/data_pegawai.png" style="width:100%;max-height:290px;">
-				<div class="caption">
-					<p style="text-align: center;font-weight:bold;font-size:14px;line-height:14px;height:28px;">Data Pegawai</p>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-md-3 col-xs-6">
-		<div class="thumbnail">
-			<a href="<?php echo base_url('pengguna/form_absensi_pegawai'); ?>">
-				<img src="<?=base_url();?>template/dist/img/absensi_pegawai.png" style="width:100%;max-height:290px;">
-				<div class="caption">
-					<p style="text-align: center;font-weight:bold;font-size:14px;line-height:14px;height:28px;">Absensi Pegawai</p>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-md-3 col-xs-6">
-		<div class="thumbnail">
-			<a href="<?php echo base_url('pengguna/data_pegawai'); ?>">
-				<img src="<?=base_url();?>template/dist/img/laporan_hasil_kerja.png" style="width:100%;max-height:290px;">
-				<div class="caption">
-					<p style="text-align: center;font-weight:bold;font-size:14px;line-height:14px;height:28px;">Laporan Hasil Kerja</p>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-md-3 col-xs-6">
-		<div class="thumbnail">
-			<a href="<?php echo base_url('pengguna/logout'); ?>">
-				<img src="<?=base_url();?>template/dist/img/logout.png" style="width:100%;max-height:290px;">
-				<div class="caption">
-					<p style="text-align: center;font-weight:bold;font-size:14px;line-height:14px;height:28px;">Logout</p>
-				</div>
-			</a>
-		</div>
-	</div>
+<?php require_once APPPATH.'views/templates/header.php'; ?>
+<div class="container-fluid" style="overflow-x: scroll;">
+	<?php if (count($isi)>0) { ?>
+	<table class="table table-bordered table-striped" id="dtTable">
+		<thead>
+			<tr>
+				<th>Nama</th>
+				<th>Alamat</th>
+				<!-- <th>No. HP</th>
+				<th>Gaji</th> -->
+				<th width="180">Opsi</th>
+			</tr>
+		</thead>
+		<tbody>
+	<?php
+		foreach ($isi as $k => $v) {
+	?>
+		<tr>
+			<td><?php echo $v->nama; ?></td>
+			<td><?php echo $v->alamat; ?></td>
+			<!-- <td><?php //echo $v->telp; ?></td>
+			<td><?php //echo 'Rp. '.number_format($v->gaji,0,',','.'); ?></td> -->
+			<td>
+				<a href="<?php echo base_url('pegawai/detail/'.$v->id); ?>" class="btn btn-warning">Detail</a>
+				<a href="<?php echo base_url('pegawai/form_edit/'.$v->id); ?>" class="btn btn-success">Edit</a>
+				<a href="<?php echo base_url('pegawai/hapus/'.$v->id); ?>" class="btn btn-danger"><span class="fa fa-trash-o"></span></a>
+			</td>
+		</tr>
+	<?php
+		}
+	?>
+		</tbody>
+	</table>
+	<?php
+		} else {
+			echo "<h4 style='text-align:center;'><i>Data Masih Kosong!</i></h4>";
+		}
+	?>
 </div>
-<?php require_once 'footer.php'; ?>
+<br>
+<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
+<?php require_once APPPATH.'views/templates/footer.php'; ?>

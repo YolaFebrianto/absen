@@ -1,5 +1,5 @@
-<?php require_once 'header.php'; ?>
-<?= form_open_multipart('pengguna/edit_pegawai/'.$id); ?>
+<?php require_once APPPATH.'views/templates/header.php'; ?>
+<?= form_open_multipart('pegawai/edit/'.$id); ?>
 	<div class="form-group">
 		<label>Nama Pegawai :</label>
 		<input type="text" name="nama" class="form-control" value="<?=$isi['nama'];?>" required>
@@ -16,7 +16,7 @@
 		<label>Gaji :</label>
 		<input type="number" name="gaji" class="form-control" min="0" value="<?=$isi['gaji'];?>" required>	
 	</div>
-	<a href="<?php echo base_url('pengguna/data_pegawai'); ?>" class="btn btn-default pull-left">Back</a>
+	<a href="<?php echo base_url('pegawai/index'); ?>" class="btn btn-default pull-left">Back</a>
 	<input type="submit" name="edit" value="Save" class="btn btn-default pull-right">
 <?= form_close(); ?>
-<?php require_once 'footer.php'; ?>
+<?php require_once APPPATH.'views/templates/footer.php'; ?>
