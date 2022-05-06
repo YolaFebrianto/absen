@@ -6,6 +6,7 @@ class AbsensiController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Pegawai');
 		$this->load->model('Absensi');
+		date_default_timezone_set('Asia/Jakarta');
 
 		if (empty(@$this->session->userdata('username'))) {
 			redirect('pengguna');
@@ -25,6 +26,7 @@ class AbsensiController extends CI_Controller {
 			'nama'			=> $data_pegawai['nama'],
 			'keterangan'	=> $this->input->post('keterangan'),
 			'kategori'		=> $this->input->post('kategori'),
+			'jam'           => date('H:i:s'),
 		];
 		try {
 			$cek = $this->Absensi->insert($data);

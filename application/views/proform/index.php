@@ -51,6 +51,4 @@
 		}
 	?>
 </div>
-<br>
-<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
 <?php require_once APPPATH.'views/templates/footer.php'; ?>

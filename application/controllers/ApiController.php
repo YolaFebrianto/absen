@@ -8,6 +8,7 @@ class ApiController extends CI_Controller {
 		$this->load->model('Pegawai');
 		$this->load->model('Absensi');
 		$this->load->model('Proform');
+		date_default_timezone_set('Asia/Jakarta');
 	}
     public function login($username,$password)
     {

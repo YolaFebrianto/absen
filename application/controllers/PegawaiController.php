@@ -5,6 +5,7 @@ class PegawaiController extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Pegawai');
+		date_default_timezone_set('Asia/Jakarta');
 
 		if (empty(@$this->session->userdata('username'))) {
 			redirect('pengguna');
