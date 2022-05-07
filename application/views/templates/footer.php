@@ -40,7 +40,15 @@
 						<div class="form-group">
 							<button type="submit" class="btn btn btn-primary btn-sm button-blue" name="btnsubmit"> Tampilkan </button>
 							<a href="" class="btn btn btn-primary btn-sm button-blue" name="btnreset"> Clear Data </a>
-							<!-- <a href="#" class="btn btn btn-primary btn-sm button-gray"> Cetak PDF </a> -->
+							<?php
+								if (!empty($this->input->post('dari')) AND !empty($this->input->post('sampai'))) {
+									$dari = date('Y-m-d',strtotime($this->input->post('dari')));
+									$sampai = date('Y-m-d',strtotime($this->input->post('sampai')));
+							?>
+							<a href="<?php echo base_url('absensi/printPDF/'.$dari.'/'.$sampai); ?>" class="btn btn btn-warning btn-sm button-gray"> Cetak PDF </a>
+							<?php
+								}
+							?>
 						</div>
 						<?php echo form_close(); ?>
 						<?php if (count($absensi)>0) { ?>
@@ -61,9 +69,9 @@
 							<tr>
 								<td><?php echo $key+1; ?></td>
 								<td><?php echo $ab->nama; ?></td>
-								<td><?php echo 'Rp. '.@number_format($ab->gaji,0,',','.'); ?></td>
-								<td><?php echo @number_format($ab->masuk,1,',','.'); ?></td>
-								<td><?php echo 'Rp. '.@number_format($ab->gaji_diterima,0,',','.'); ?></td>
+								<td><?php echo 'Rp. '.@number_format($ab->gaji,2,',','.'); ?></td>
+								<td><?php echo @number_format($ab->masuk,2,',','.'); ?></td>
+								<td><?php echo 'Rp. '.@number_format($ab->gaji_diterima,2,',','.'); ?></td>
 							</tr>
 							<?php
 								}

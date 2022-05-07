@@ -1,4 +1,6 @@
 <?php
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class AbsensiController extends CI_Controller {
@@ -47,5 +49,23 @@ class AbsensiController extends CI_Controller {
 			}
 		}
 		redirect();
+	}
+	public function printPDF($dari,$sampai){
+		// $dari = date('Y-m-d',strtotime($this->input->post('dari')));
+		// $sampai = date('Y-m-d',strtotime($this->input->post('sampai')));
+		$this->db->order_by('nama','ASC');
+		$data['dari'] 	= $dari;
+		$data['sampai'] = $sampai;
+		$data['cetak'] 	= $this->Absensi->laporan($dari,$sampai)->result();
+		$this->load->view('absensi/cetak-pdf',$data);
+		$html = $this->output->get_output();
+
+		require_once APPPATH.'third_party/dompdf/autoload.inc.php';
+		$dompdf = new Dompdf();
+		$filename = "Laporan Absensi ".$dari.' sampai '.$sampai.".pdf";
+		$dompdf->loadHtml($html);
+		$dompdf->setPaper('A4', 'portrait');
+		$dompdf->render();
+		$dompdf->stream($filename,array("Attachment"=>false));
 	}
 }

@@ -18,15 +18,16 @@ $route['api/proform/(:any)']['PUT'] 		= 'ApiController/updateProform/$1';
 $route['api/proform/(:any)']['DELETE'] 		= 'ApiController/deleteProform/$1';
 
 // WEB ROUTES
-$route['pengguna']	 			= 'PenggunaController/index';
-$route['pengguna/(:any)']		= 'PenggunaController/$1';
-$route['pegawai']				= 'PegawaiController/index';
-$route['pegawai/(:any)']		= 'PegawaiController/$1';
-$route['pegawai/(:any)/(:num)']	= 'PegawaiController/$1/$2';
-$route['proform']				= 'ProformController/index';
-$route['proform/(:any)']		= 'ProformController/$1';
-$route['proform/(:any)/(:num)']	= 'ProformController/$1/$2';
-$route['absensi/(:any)']		= 'AbsensiController/$1';
+$route['pengguna']	 					= 'PenggunaController/index';
+$route['pengguna/(:any)']				= 'PenggunaController/$1';
+$route['pegawai']						= 'PegawaiController/index';
+$route['pegawai/(:any)']				= 'PegawaiController/$1';
+$route['pegawai/(:any)/(:num)']			= 'PegawaiController/$1/$2';
+$route['proform']						= 'ProformController/index';
+$route['proform/(:any)']				= 'ProformController/$1';
+$route['proform/(:any)/(:num)']			= 'ProformController/$1/$2';
+$route['absensi/(:any)']				= 'AbsensiController/$1';
+$route['absensi/(:any)/(:any)/(:any)']	= 'AbsensiController/$1/$2/$3';
 // $route['pengguna/form-add']	 = 'PenggunaController/form_add';
 // $route['pengguna/form-edit'] = 'PenggunaController/form_edit';
 
