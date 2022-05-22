@@ -51,31 +51,161 @@
 							?>
 						</div>
 						<?php echo form_close(); ?>
-						<?php if (count($absensi)>0) { ?>
-						<table class="table table-bordered table-striped" id="dtTable2">
+						<?php
+							$arrayBulan = array('Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
+							$arrayHari = array(
+								'Mon'=>'Sen',
+								'Tue'=>'Sel',
+								'Wed'=>'Rab',
+								'Thu'=>'Kam',
+								'Fri'=>'Jum',
+								'Sat'=>'Sab',
+								'Sun'=>'Mgg'
+							);
+							if (count($absensi)>0) { ?>
+						<table class="table table-bordered table-striped">
 							<thead>
 								<tr>
-									<th>No.</th>
-									<th>Nama Pegawai</th>
-									<th>Gaji Harian</th>
-									<th>Masuk</th>
-									<th>Gaji yang Diterima</th>
+									<th rowspan="2" style="text-align:center;vertical-align: middle;">Bulan
+									<?php
+										$dari_bulan = @date('m',strtotime($this->input->post('dari')));
+										$sampai_bulan = @date('m',strtotime($this->input->post('sampai')));
+										if ($dari_bulan==$sampai_bulan) {
+											echo $arrayBulan[$dari_bulan-1];
+										} else {
+											echo $arrayBulan[$dari_bulan-1].' - '.$arrayBulan[$sampai_bulan-1];
+										}
+									?>
+									</th>
+									<?php
+										$tgl1 = new DateTime($dari);
+										$tgl2 = new DateTime($sampai);
+										$jarak = $tgl2->diff($tgl1);
+									?>
+									<th colspan="<?=$jarak->d+2;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($this->input->post('dari')));?> sampai <?=@date('d/m/Y',strtotime($this->input->post('sampai')));?></th>
+								</tr>
+								<tr>
+								<?php
+									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
+										echo "<th style='text-align:center;'>".$arrayHari[$i->format("D")] ."</th>";
+									}
+								?>
+									<th rowspan="2" style="vertical-align: middle;text-align: center;">Total</th>
+								</tr>
+								<tr>
+									<th>Nama Karyawan</th>
+								<?php
+									$tgl1 = new DateTime($dari);
+									$tgl2 = new DateTime($sampai);
+									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
+										echo "<th style='text-align:center;'>".$i->format("d")."</th>";
+									}
+								?>
 								</tr>
 							</thead>
 							<tbody>
 							<?php
-								foreach ($absensi as $key => $ab) {
+								// absenPegawai, totalAbsenTgl, totalAbsenPgw, totalAbsenPgwAll
+								// Sebagai isian baris total absen harian [BARIS TERBAWAH]
+								$totalAbsenTgl=array();
+								// Sebagai isian kolom total absen pegawai [KOLOM TERKANAN]
+								$totalAbsenPgw=array();
+								foreach ($pegawai as $k => $pgw) {
 							?>
 							<tr>
-								<td><?php echo $key+1; ?></td>
-								<td><?php echo $ab->nama; ?></td>
-								<td><?php echo 'Rp. '.@number_format($ab->gaji,2,',','.'); ?></td>
-								<td><?php echo @number_format($ab->masuk,2,',','.'); ?></td>
-								<td><?php echo 'Rp. '.@number_format($ab->gaji_diterima,2,',','.'); ?></td>
+								<td><?php echo $pgw->nama; ?></td>
+								<?php
+									// DAFTARKAN DATA ABSEN KE ARRAY PEGAWAI
+									// DATA ABSEN AKAN DICOCOKKAN SESUAI KOLOM TABEL
+									//'jml_absen'=>$va->jml_absen,
+									$absenPegawai = array();
+									foreach ($absensi as $ka => $va) {
+										if ($va->id_pegawai==$pgw->id) {
+											$absenPegawai[$va->tanggal][] = array('keterangan'=>$va->keterangan);
+										}
+									}
+									$tgl1 = new DateTime($dari);
+									$tgl2 = new DateTime($sampai);
+									if (empty(@$totalAbsenPgw[$pgw->id])) {
+										$totalAbsenPgw[$pgw->id] = 0;
+									}
+									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
+										if (empty(@$totalAbsenTgl[$i->format("Y-m-d")])) {
+											$totalAbsenTgl[$i->format("Y-m-d")] = 0;
+										}
+
+										echo "<td style='text-align:center;'>";
+										$jml_absen=0;
+										if (!empty(@$absenPegawai[$i->format("Y-m-d")])) {
+											$jml_absen=count(@$absenPegawai[$i->format("Y-m-d")]);
+										}
+										// $jml_absen = @$absenPegawai[$i->format("Y-m-d")][$i]['jml_absen'];
+										$keterangan = @$absenPegawai[$i->format("Y-m-d")][0]['keterangan'];
+										$keterangan1 = @$absenPegawai[$i->format("Y-m-d")][1]['keterangan'];
+										if ($jml_absen>0) {
+											if ($jml_absen==2) {
+												if (!empty($keterangan)) {
+													if (!empty($keterangan1)) {
+														echo $keterangan;
+													} else {
+														echo "1/2 hari";
+														$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
+														$totalAbsenPgw[$pgw->id]+=0.5;
+													}
+												} else {
+													if (!empty($keterangan1)) {
+														echo '1/2 hari';
+														$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
+														$totalAbsenPgw[$pgw->id]+=0.5;
+													} else {
+														echo "V";
+														$totalAbsenTgl[$i->format("Y-m-d")]+=1;
+														$totalAbsenPgw[$pgw->id]+=1;
+													}
+												}
+											} else if ($jml_absen==1) {
+												if (!empty($keterangan)) {
+													echo $keterangan;
+												} else {
+													echo "1/2 hari";
+													$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
+													$totalAbsenPgw[$pgw->id]+=0.5;
+												}
+											}
+										} else {
+											echo "A";
+										}
+										echo "</td>";
+									}
+								?>
+
+								<td style='text-align:center;'>
+									<?php echo @$totalAbsenPgw[$pgw->id];?>
+								</td>
 							</tr>
 							<?php
 								}
 							?>
+							<tr>
+								<td>Total</td>
+								<?php
+									$tgl1 = new DateTime($dari);
+									$tgl2 = new DateTime($sampai);
+									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
+										echo "<td style='text-align:center;'>".$totalAbsenTgl[$i->format("Y-m-d")]."</td>";
+									}
+								?>
+								<td style="text-align: center;">
+								<?php
+									// Kolom sebelah POJOK KANAN BAWAH
+									$totalAbsenPgwAll=0;
+									foreach ($totalAbsenPgw as $k => $v) {
+										$totalAbsenPgwAll += $totalAbsenPgw[$k];
+									}
+									echo $totalAbsenPgwAll;
+								?>
+								</td>
+							</tr>
 							</tbody>
 						</table>
 						<?php

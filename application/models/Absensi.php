@@ -44,4 +44,12 @@
 					GROUP BY a.id_pegawai";
 			return $this->db->query($sql);
 		}
+		public function laporan2($dari,$sampai)
+		{
+			# GROUP BY a.id_pegawai, a.tanggal
+			$sql = "SELECT * FROM absensi a
+					WHERE a.tanggal BETWEEN '$dari' AND '$sampai'
+					ORDER BY a.id_pegawai, a.tanggal, a.kategori";
+			return $this->db->query($sql);
+		}
 	}

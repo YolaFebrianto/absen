@@ -6,6 +6,7 @@ class ProformController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Absensi');
 		$this->load->model('Proform');
+		$this->load->model('Pegawai');
 		date_default_timezone_set('Asia/Jakarta');
 
 		if (empty(@$this->session->userdata('username'))) {
@@ -36,10 +37,11 @@ class ProformController extends CI_Controller {
 	public function index(){
 		$data['isi'] = $this->Proform->get()->result();
 		$data['title'] = 'Data Proform';
+		$data['pegawai'] = $this->Pegawai->get()->result();
 		if (isset($_POST['btnsubmit'])) {
 			$dari = $this->input->post('dari');
 			$sampai = $this->input->post('sampai');
-			$data['absensi'] = $this->Absensi->laporan($dari,$sampai)->result();
+			$data['absensi'] = $this->Absensi->laporan2($dari,$sampai)->result();
 		} else {
 			$data['absensi'] = array();
 		}
