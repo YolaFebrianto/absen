@@ -74,9 +74,15 @@
 						<?php
 							$tgl1 = new DateTime($dari);
 							$tgl2 = new DateTime($sampai);
-							$jarak = $tgl2->diff($tgl1);
+							// $jarak = $tgl2->diff($tgl1);
+							$tglFirst = strtotime($dari);
+							$tglSecond = strtotime($sampai);
+
+							$jarak = $tglSecond - $tglFirst;
+
+							$hari = $jarak / 60 / 60 / 24;
 						?>
-						<th colspan="<?=($jarak->d*2)+3;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($dari));?> sampai <?=@date('d/m/Y',strtotime($sampai));?></th>
+						<th colspan="<?=($hari*2)+3;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($dari));?> sampai <?=@date('d/m/Y',strtotime($sampai));?></th>
 					</tr>
 					<tr>
 					<?php
@@ -147,7 +153,7 @@
 							$keterangan = @$absenPegawai[$i->format("Y-m-d")]['pagi']['keterangan'];
 							$keterangan1 = @$absenPegawai[$i->format("Y-m-d")]['siang']['keterangan'];
 							// $jml_absen = @$absenPegawai[$i->format("Y-m-d")][$i]['jml_absen'];
-							$bgcolor='';
+							$bgcolor='background:#367fa9;';
 							if (empty($arrAbsenPagi)) {
 								$bgcolor='background:red;';
 							}
@@ -171,7 +177,7 @@
 								}
 							}
 							echo "</td>";
-							$bgcolor1='';
+							$bgcolor1='background:#367fa9;';
 							if (empty($arrAbsenSiang)) {
 								$bgcolor1='background:red;';
 							}

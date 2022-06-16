@@ -13,6 +13,17 @@
 		{
 			return $this->db->get_where('absensi',['id'=>$id]);
 		}
+		public function detail_pegawai($id_pegawai,$dari='',$sampai='')
+		{
+			$sql = "SELECT nama,
+						(SELECT COUNT(*)/2 FROM absensi WHERE id_pegawai='$id_pegawai' AND keterangan='' AND tanggal BETWEEN '$dari' AND '$sampai') AS masuk,
+						(SELECT COUNT(*)/2 FROM absensi WHERE id_pegawai='$id_pegawai' AND keterangan='S' AND tanggal BETWEEN '$dari' AND '$sampai') AS sakit, 
+						(SELECT COUNT(*)/2 FROM absensi WHERE id_pegawai='$id_pegawai' AND keterangan='I' AND tanggal BETWEEN '$dari' AND '$sampai') AS izin, 
+						(SELECT COUNT(*)/2 FROM absensi WHERE id_pegawai='$id_pegawai' AND keterangan='A' AND tanggal BETWEEN '$dari' AND '$sampai') AS alpha,
+						DATEDIFF('$sampai','$dari')+1 AS selisih
+					FROM absensi WHERE id_pegawai='$id_pegawai' GROUP BY id_pegawai";
+			return $this->db->query($sql);
+		}
 
 		public function insert($dataAbsensi)
 		{

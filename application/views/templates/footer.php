@@ -80,9 +80,16 @@
 									<?php
 										$tgl1 = new DateTime($dari);
 										$tgl2 = new DateTime($sampai);
-										$jarak = $tgl2->diff($tgl1);
+										// $jarak = $tgl2->diff($tgl1);
+										$tglFirst = strtotime($this->input->post('dari'));
+										$tglSecond = strtotime($this->input->post('sampai'));
+
+										$jarak = $tglSecond - $tglFirst;
+
+										$hari = $jarak / 60 / 60 / 24;
 									?>
-									<th colspan="<?=($jarak->d*2)+3;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($this->input->post('dari')));?> sampai <?=@date('d/m/Y',strtotime($this->input->post('sampai')));?></th>
+									<th colspan="<?=($hari*2)+4;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($this->input->post('dari')));?> sampai <?=@date('d/m/Y',strtotime($this->input->post('sampai')));?>
+									</th>
 								</tr>
 								<tr>
 								<?php
@@ -91,6 +98,7 @@
 									}
 								?>
 									<th rowspan="3" style="vertical-align: middle;text-align: center;">Total</th>
+									<th rowspan="3" style="vertical-align: middle;text-align: center;">Keterangan</th>
 								</tr>
 								<tr>
 									<th rowspan="2">Nama Karyawan</th>
@@ -153,7 +161,7 @@
 										$keterangan = @$absenPegawai[$i->format("Y-m-d")]['pagi']['keterangan'];
 										$keterangan1 = @$absenPegawai[$i->format("Y-m-d")]['siang']['keterangan'];
 										// $jml_absen = @$absenPegawai[$i->format("Y-m-d")][$i]['jml_absen'];
-										$bgcolor='';
+										$bgcolor='background:#367fa9;';
 										if (empty($arrAbsenPagi)) {
 											$bgcolor='background:red;';
 										}
@@ -177,7 +185,7 @@
 											}
 										}
 										echo "</td>";
-										$bgcolor1='';
+										$bgcolor1='background:#367fa9;';
 										if (empty($arrAbsenSiang)) {
 											$bgcolor1='background:red;';
 										}
@@ -206,6 +214,12 @@
 
 								<td style='text-align:center;'>
 									<?php echo @$totalAbsenPgw[$pgw->id];?>
+								</td>
+								<td style="text-align: center;">
+									<!-- <a href="<?php //echo base_url('absensi/detail/'.$pgw->id.'/'.$dari.'/'.$sampai); ?>">Lihat</a> -->
+									<a href="#" class="btn btn-sm btn-default" onclick="detailPgw(<?=$pgw->id;?>,'<?=$dari;?>','<?=$sampai;?>')" data-toggle="modal" data-target="#modalDetail">
+										<span class="fa fa-eye"></span> Lihat
+									</a>
 								</td>
 							</tr>
 							<?php
@@ -248,6 +262,34 @@
 		<!-- </section> -->
 	</div>
 
+	<!-- Modal -->
+	<div class="modal fade bd-example-modal-md" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="modalDetailLabel" aria-hidden="true">
+	  <div class="vertical-alignment-helper">
+	    <div class="modal-dialog modal-md vertical-align-center" role="document">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <h4 class="modal-title" id="modalDetailLabel" style="text-align:center;">
+	            Detail Absensi Pegawai
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">&times;</span>
+	            </button>
+	          </h4>
+	        </div>
+	        <div class="modal-body">
+	          <!-- <p style="text-align:center;font-weight:bold;">
+	            Tanggal <span id="dariTgl"></span> sampai <span id="sampaiTgl"></span>
+	          </p> -->
+	          <div id="modelDetailBody"></div>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">
+	            <span class="fa fa-times"></span> Tutup
+	          </button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<!-- jQuery 2.2.3 -->
 	<script src="<?=base_url();?>template/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
@@ -341,7 +383,20 @@
 			}
 			$(this).toggleClass('focused');
 		});
-	});	
+	});
+	function detailPgw(id_pegawai,dari,sampai){
+		$('span#dariTgl').html(dari);
+		$('span#sampaiTgl').html(sampai);
+		$.ajax({
+            'method': 'GET',
+            'url': "<?=base_url().'absensi/detail';?>",
+            'data': {id_pegawai:id_pegawai, dari: dari, sampai: sampai},
+            'success': function(data){
+                $('#modelDetailBody').html(data);
+            }
+        });
+		// $('#setujuiYes').attr('href','<?=base_url();?>user/edit_status/'+id+'/3');
+	}
 	</script>
 </body>
 </html>

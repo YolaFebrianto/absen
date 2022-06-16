@@ -28,6 +28,7 @@ $route['proform/(:any)']				= 'ProformController/$1';
 $route['proform/(:any)/(:num)']			= 'ProformController/$1/$2';
 $route['absensi/(:any)']				= 'AbsensiController/$1';
 $route['absensi/(:any)/(:any)/(:any)']	= 'AbsensiController/$1/$2/$3';
+$route['absensi/detail/(:num)/(:any)/(:any)'] = 'AbsensiController/detail/$1/$2/$3';
 // $route['pengguna/form-add']	 = 'PenggunaController/form_add';
 // $route['pengguna/form-edit'] = 'PenggunaController/form_edit';
 
