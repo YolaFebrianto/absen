@@ -54,9 +54,10 @@ class AbsensiController extends CI_Controller {
 		// $dari = date('Y-m-d',strtotime($this->input->post('dari')));
 		// $sampai = date('Y-m-d',strtotime($this->input->post('sampai')));
 		$this->db->order_by('nama','ASC');
-		$data['dari'] 	= $dari;
-		$data['sampai'] = $sampai;
-		$data['cetak'] 	= $this->Absensi->laporan($dari,$sampai)->result();
+		$data['dari'] 		= $dari;
+		$data['sampai'] 	= $sampai;
+		$data['pegawai'] 	= $this->Pegawai->get()->result();
+		$data['cetak'] 		= $this->Absensi->laporan2($dari,$sampai)->result();
 		$this->load->view('absensi/cetak-pdf',$data);
 		$html = $this->output->get_output();
 

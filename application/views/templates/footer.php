@@ -31,7 +31,7 @@
 					        </div>
 					    </div>
 					    <div class="form-group">
-					    	<label>Tanggal Awal</label>
+					    	<label>Tanggal Akhir</label>
 					       	<div class="input-group date" data-date="<?php echo @$this->input->post('sampai');?>" data-date-format="yyyy-mm">
 								<input class="form-control input-sm input-tanggal" type="text" name="sampai" placeholder="Tanggal Akhir" value="<?php echo @$this->input->post('sampai');?>" readonly />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -66,7 +66,7 @@
 						<table class="table table-bordered table-striped">
 							<thead>
 								<tr>
-									<th rowspan="2" style="text-align:center;vertical-align: middle;">Bulan
+									<th rowspan="2" style="text-align:center;vertical-align: middle;">
 									<?php
 										$dari_bulan = @date('m',strtotime($this->input->post('dari')));
 										$sampai_bulan = @date('m',strtotime($this->input->post('sampai')));
@@ -82,23 +82,33 @@
 										$tgl2 = new DateTime($sampai);
 										$jarak = $tgl2->diff($tgl1);
 									?>
-									<th colspan="<?=$jarak->d+2;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($this->input->post('dari')));?> sampai <?=@date('d/m/Y',strtotime($this->input->post('sampai')));?></th>
+									<th colspan="<?=($jarak->d*2)+3;?>" style="text-align:center;">Tanggal <?=@date('d/m/Y',strtotime($this->input->post('dari')));?> sampai <?=@date('d/m/Y',strtotime($this->input->post('sampai')));?></th>
 								</tr>
 								<tr>
 								<?php
 									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
-										echo "<th style='text-align:center;'>".$arrayHari[$i->format("D")] ."</th>";
+										echo "<th style='text-align:center;' colspan='2'>".$arrayHari[$i->format("D")] ."</th>";
 									}
 								?>
-									<th rowspan="2" style="vertical-align: middle;text-align: center;">Total</th>
+									<th rowspan="3" style="vertical-align: middle;text-align: center;">Total</th>
 								</tr>
 								<tr>
-									<th>Nama Karyawan</th>
+									<th rowspan="2">Nama Karyawan</th>
 								<?php
 									$tgl1 = new DateTime($dari);
 									$tgl2 = new DateTime($sampai);
 									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
-										echo "<th style='text-align:center;'>".$i->format("d")."</th>";
+										echo "<th style='text-align:center;' colspan='2'>".$i->format("d")."</th>";
+									}
+								?>
+								</tr>
+								<tr>
+								<?php
+									$tgl1 = new DateTime($dari);
+									$tgl2 = new DateTime($sampai);
+									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
+										echo "<th style='text-align:center;'> Pagi </th>
+										<th style='text-align:center;'> Siang </th>";
 									}
 								?>
 								</tr>
@@ -121,7 +131,7 @@
 									$absenPegawai = array();
 									foreach ($absensi as $ka => $va) {
 										if ($va->id_pegawai==$pgw->id) {
-											$absenPegawai[$va->tanggal][] = array('keterangan'=>$va->keterangan);
+											$absenPegawai[$va->tanggal][$va->kategori] = array('keterangan'=>$va->keterangan);
 										}
 									}
 									$tgl1 = new DateTime($dari);
@@ -134,46 +144,61 @@
 											$totalAbsenTgl[$i->format("Y-m-d")] = 0;
 										}
 
-										echo "<td style='text-align:center;'>";
 										$jml_absen=0;
 										if (!empty(@$absenPegawai[$i->format("Y-m-d")])) {
 											$jml_absen=count(@$absenPegawai[$i->format("Y-m-d")]);
 										}
+										$arrAbsenPagi = @$absenPegawai[$i->format("Y-m-d")]['pagi'];
+										$arrAbsenSiang = @$absenPegawai[$i->format("Y-m-d")]['siang'];
+										$keterangan = @$absenPegawai[$i->format("Y-m-d")]['pagi']['keterangan'];
+										$keterangan1 = @$absenPegawai[$i->format("Y-m-d")]['siang']['keterangan'];
 										// $jml_absen = @$absenPegawai[$i->format("Y-m-d")][$i]['jml_absen'];
-										$keterangan = @$absenPegawai[$i->format("Y-m-d")][0]['keterangan'];
-										$keterangan1 = @$absenPegawai[$i->format("Y-m-d")][1]['keterangan'];
-										if ($jml_absen>0) {
-											if ($jml_absen==2) {
-												if (!empty($keterangan)) {
-													if (!empty($keterangan1)) {
-														echo $keterangan;
-													} else {
-														echo "1/2 hari";
-														$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
-														$totalAbsenPgw[$pgw->id]+=0.5;
-													}
-												} else {
-													if (!empty($keterangan1)) {
-														echo '1/2 hari';
-														$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
-														$totalAbsenPgw[$pgw->id]+=0.5;
-													} else {
-														echo "V";
-														$totalAbsenTgl[$i->format("Y-m-d")]+=1;
-														$totalAbsenPgw[$pgw->id]+=1;
-													}
-												}
-											} else if ($jml_absen==1) {
-												if (!empty($keterangan)) {
-													echo $keterangan;
-												} else {
-													echo "1/2 hari";
-													$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
-													$totalAbsenPgw[$pgw->id]+=0.5;
-												}
+										$bgcolor='';
+										if (empty($arrAbsenPagi)) {
+											$bgcolor='background:red;';
+										}
+										if (!empty($arrAbsenPagi) && !empty($keterangan)) {
+											if ($keterangan=='S') {
+												$bgcolor='background:lightgreen;';
+											} else if ($keterangan=='I') {
+												$bgcolor='background:orange';
+											} else {
+												$bgcolor='background:red;';
 											}
-										} else {
-											echo "A";
+										}
+										echo "<td style='text-align:center;".$bgcolor."'>";
+										if (!empty($arrAbsenPagi)) {
+											if (!empty($keterangan)) {
+												echo $keterangan;
+											} else {
+												echo "-";
+												$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
+												$totalAbsenPgw[$pgw->id]+=0.5;
+											}
+										}
+										echo "</td>";
+										$bgcolor1='';
+										if (empty($arrAbsenSiang)) {
+											$bgcolor1='background:red;';
+										}
+										if (!empty($arrAbsenSiang) && !empty($keterangan1)) {
+											if ($keterangan1=='S') {
+												$bgcolor1='background:lightgreen;';
+											} else if ($keterangan1=='I') {
+												$bgcolor1='background:orange';
+											} else {
+												$bgcolor1='background:red;';
+											}
+										}
+										echo "<td style='text-align:center;".$bgcolor1."'>";
+										if (!empty($arrAbsenSiang)) {
+											if (!empty($keterangan1)) {
+												echo $keterangan1;
+											} else {
+												echo "-";
+												$totalAbsenTgl[$i->format("Y-m-d")]+=0.5;
+												$totalAbsenPgw[$pgw->id]+=0.5;
+											}
 										}
 										echo "</td>";
 									}
@@ -192,7 +217,7 @@
 									$tgl1 = new DateTime($dari);
 									$tgl2 = new DateTime($sampai);
 									for ($i=$tgl1; $i <= $tgl2; $i->modify('+1 day')) {
-										echo "<td style='text-align:center;'>".$totalAbsenTgl[$i->format("Y-m-d")]."</td>";
+										echo "<td style='text-align:center;' colspan='2'>".$totalAbsenTgl[$i->format("Y-m-d")]."</td>";
 									}
 								?>
 								<td style="text-align: center;">
