@@ -62,8 +62,8 @@
 					<tr>
 						<th rowspan="2" style="text-align:center;vertical-align: middle;">
 						<?php
-							$dari_bulan = @date('m',$dari);
-							$sampai_bulan = @date('m',$sampai);
+							$dari_bulan = @date('m',strtotime($dari));
+							$sampai_bulan = @date('m',strtotime($sampai));
 							if ($dari_bulan==$sampai_bulan) {
 								echo $arrayBulan[$dari_bulan-1];
 							} else {

@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="<?=base_url();?>template/dist/css/skins/_all-skins.min.css">
 	<!-- DataTables -->
 	<link rel="stylesheet" href="<?=base_url();?>template/plugins/datatables/dataTables.bootstrap.css">
+	<link rel="stylesheet" href="<?=base_url();?>template/plugins/morris/morris.css">
 	<style type="text/css">
 		div.disclaimer{
 		    display: none;

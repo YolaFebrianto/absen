@@ -41,4 +41,27 @@
 			);
 			$this->db->delete('proform', $val);
 		}
+
+		public function data_grafik()
+		{
+			$sql = "SELECT SUM(p.jumlah) AS total, YEAR(p.deadline) AS YEAR, m.MONTH 
+					FROM proform AS p
+					LEFT JOIN 
+					(SELECT '01' AS MONTH
+					UNION SELECT '02' AS MONTH
+					UNION SELECT '03' AS MONTH
+					UNION SELECT '04' AS MONTH
+					UNION SELECT '05' AS MONTH
+					UNION SELECT '06' AS MONTH
+					UNION SELECT '07' AS MONTH
+					UNION SELECT '08' AS MONTH
+					UNION SELECT '09' AS MONTH
+					UNION SELECT '10' AS MONTH
+					UNION SELECT '11' AS MONTH
+					UNION SELECT '12' AS MONTH) AS m
+					ON MONTH(p.deadline) = m.MONTH
+					GROUP BY YEAR(p.deadline),MONTH(p.deadline)
+					ORDER BY YEAR(p.deadline),MONTH(p.deadline) DESC";
+			return $this->db->query($sql);
+		}
 	}

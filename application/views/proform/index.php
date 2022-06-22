@@ -2,6 +2,7 @@
 <div class="container-fluid" style="overflow-x: scroll;">
 	<div>
 		<a href="<?php echo base_url('proform/form_tambah'); ?>" class="btn btn-info pull-left">Form Data Proform</a>
+		<a href="<?php echo base_url('proform/grafik'); ?>" class="btn btn-default pull-left" style="margin-left: 10px;">Grafik</a>
 		<p class="pull-right" style="font-size:14px;font-weight:400;line-height:1.42857143;padding:6px 12px;">Tanggal : <?php echo date('d/m/Y'); ?></p>
 	</div>
 	<div style="clear: both;"></div>

@@ -79,4 +79,9 @@ class ProformController extends CI_Controller {
 		}
 		redirect('proform/index');
 	}
+	public function grafik(){
+		$data['isi'] = $this->Proform->data_grafik()->result();
+		$data['title'] = 'Grafik Data Proform';
+		$this->load->view('proform/grafik',$data);
+	}
 }
