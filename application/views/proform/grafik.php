@@ -6,7 +6,7 @@
 			$arrQtyMonth[$v->YEAR."-".$v->MONTH] = $v->total;
 		}
 	?>
-	<div class="chart" id="line-chart" style="height: 300px;"></div>
+	<div class="chart" id="line-chart" style="height: 300px;min-width: 300px;"></div>
 	<br>
 	<a href="<?php echo base_url('proform/index'); ?>" class="btn btn-default">Back</a>
 	<script src="<?=base_url();?>template/plugins/jQuery/jquery-2.2.3.min.js"></script>

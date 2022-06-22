@@ -253,7 +253,26 @@
 							}
 						?>
 					</div>
-					<br>
+					<p><b>Keterangan : </b></p>
+					<div style="clear:both;">
+						<div style="float:left;width:14px;height:14px;line-height:1.42857143;margin:4px 5px 6px;background-color:#367fa9;"></div>
+						<div style="float:left;">
+							<p> : Masuk</p>
+						</div>
+						<div style="float:left;width:14px;height:14px;line-height:1.42857143;margin:4px 5px 6px;background-color:red;"></div>
+						<div style="float:left;">
+							<p> : Alpha</p>
+						</div>
+						<div style="float:left;width:14px;height:14px;line-height:1.42857143;margin:4px 5px 6px;background-color:orange;"></div>
+						<div style="float:left;">
+							<p> : Izin</p>
+						</div>
+						<div style="float:left;width:14px;height:14px;line-height:1.42857143;margin:4px 5px 6px;background-color:lightgreen;"></div>
+						<div style="float:left;">
+							<p> : Sakit</p>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
 					<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
 				</div>
 			</div>
