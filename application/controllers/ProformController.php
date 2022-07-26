@@ -37,14 +37,6 @@ class ProformController extends CI_Controller {
 	public function index(){
 		$data['isi'] = $this->Proform->get()->result();
 		$data['title'] = 'Data Proform';
-		$data['pegawai'] = $this->Pegawai->get()->result();
-		if (isset($_POST['btnsubmit'])) {
-			$dari = $this->input->post('dari');
-			$sampai = $this->input->post('sampai');
-			$data['absensi'] = $this->Absensi->laporan2($dari,$sampai)->result();
-		} else {
-			$data['absensi'] = array();
-		}
 		$data['jumlahData'] = $this->Proform->getCount();
 		$this->load->view('proform/index',$data);
 	}

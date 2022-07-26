@@ -51,5 +51,7 @@
 			echo "<h4 style='text-align:center;'><i>Data Masih Kosong!</i></h4>";
 		}
 	?>
+	<br>
+	<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
 </div>
 <?php require_once APPPATH.'views/templates/footer.php'; ?>

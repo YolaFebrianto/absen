@@ -10,7 +10,7 @@
 	</div>
 	<div class="form-group">
 		<label>No. HP :</label>
-		<input type="text" name="telp" class="form-control" required>	
+		<input type="number" name="telp" class="form-control" min="0" required>	
 	</div>
 	<div class="form-group">
 		<label>Gaji :</label>

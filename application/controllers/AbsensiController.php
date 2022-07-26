@@ -60,6 +60,18 @@ class AbsensiController extends CI_Controller {
 		$data['sampai'] = $sampai;
 		$this->load->view('absensi/detail',$data);
 	}
+	public function laporan(){
+		$data['title'] = 'Laporan Absensi';
+		$data['pegawai'] = $this->Pegawai->get()->result();
+		if (isset($_POST['btnsubmit'])) {
+			$dari = $this->input->post('dari');
+			$sampai = $this->input->post('sampai');
+			$data['absensi'] = $this->Absensi->laporan2($dari,$sampai)->result();
+		} else {
+			$data['absensi'] = array();
+		}
+		$this->load->view('absensi/laporan',$data);
+	}
 	public function printPDF($dari,$sampai){
 		// $dari = date('Y-m-d',strtotime($this->input->post('dari')));
 		// $sampai = date('Y-m-d',strtotime($this->input->post('sampai')));

@@ -12,7 +12,7 @@
 	<div class="form-group">
 		<label>Keterangan :</label>
 		<select name="keterangan" class="form-control">
-			<option value="" selected="">-</option>
+			<option value="" selected="">Hadir</option>
 			<option value="A">Alpha</option>
 			<option value="I">Izin</option>
 			<option value="S">Sakit</option>
