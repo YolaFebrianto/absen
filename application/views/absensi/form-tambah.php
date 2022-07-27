@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <?= form_open_multipart('absensi/tambah'); ?>
 	<div class="form-group">
 		<label>Nama Pegawai :</label>
@@ -29,4 +28,3 @@
 	<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default pull-left">Back</a>
 	<input type="submit" name="tambah" value="Save" class="btn btn-default pull-right">
 <?= form_close(); ?>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>

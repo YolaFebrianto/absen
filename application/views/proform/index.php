@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <div class="container-fluid" style="overflow-x: scroll;">
 	<div>
 		<a href="<?php echo base_url('proform/form_tambah'); ?>" class="btn btn-info pull-left">Form Data Proform</a>
@@ -54,4 +53,3 @@
 	<br>
 	<a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
 </div>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>

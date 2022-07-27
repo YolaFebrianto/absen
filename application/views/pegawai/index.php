@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <div class="container-fluid" style="overflow-x: scroll;">
 	<?php if (count($isi)>0) { ?>
 	<table class="table table-bordered table-striped" id="dtTable">
@@ -39,4 +38,3 @@
 </div>
 <br>
 <a href="<?php echo base_url('pengguna/index'); ?>" class="btn btn-default">Back</a>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>

@@ -139,7 +139,7 @@
                 $('#modelDetailBody').html(data);
             }
         });
-		// $('#setujuiYes').attr('href','<?=base_url();?>user/edit_status/'+id+'/3');
+		// $('#setujuiYes').attr('href','<?php //base_url();?>user/edit_status/'+id+'/3');
 	}
 	</script>
 </body>

@@ -18,7 +18,9 @@ class AbsensiController extends CI_Controller {
 		$this->db->order_by('nama','ASC');
 		$data['pegawai'] 	= $this->Pegawai->get()->result();
 		$data['title'] 	= 'Form Absensi Pegawai';
+		$this->load->view('templates/header');
 		$this->load->view('absensi/form-tambah',$data);
+		$this->load->view('templates/footer');
 	}
 	public function tambah(){
 		$id_pegawai = $this->input->post('id_pegawai');
@@ -70,7 +72,9 @@ class AbsensiController extends CI_Controller {
 		} else {
 			$data['absensi'] = array();
 		}
+		$this->load->view('templates/header');
 		$this->load->view('absensi/laporan',$data);
+		$this->load->view('templates/footer');
 	}
 	public function printPDF($dari,$sampai){
 		// $dari = date('Y-m-d',strtotime($this->input->post('dari')));

@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <?php if($this->session->flashdata('info') != null): ?>
 <div class="alert alert-info alert-dismissible">
 	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -77,4 +76,3 @@
 		</div>
 	</div>
 </div>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>

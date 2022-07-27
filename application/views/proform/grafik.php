@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <div class="container-fluid" style="overflow-x: scroll;">
 	<?php
 		$arrQtyMonth=[];
@@ -61,4 +60,3 @@
 	    });
 	</script>
 </div>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>

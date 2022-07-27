@@ -15,7 +15,9 @@ class PenggunaController extends CI_Controller {
 			$user_id = @$data['user']['id'];
 			$data['isi'] = array();
 			$data['title'] = 'Home Page';
+			$this->load->view('templates/header');
 			$this->load->view('pengguna/index',$data);
+			$this->load->view('templates/footer');
 		} else {
 			$this->load->view('pengguna/login');
 		}		

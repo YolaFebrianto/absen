@@ -16,7 +16,9 @@ class ProformController extends CI_Controller {
 	public function form_tambah(){
 		$data['isi'] = array();
 		$data['title'] = 'Form Tambah Data Proform';
+		$this->load->view('templates/header');
 		$this->load->view('proform/form-tambah',$data);
+		$this->load->view('templates/footer');
 	}
 	public function tambah(){
 		$data = [
@@ -30,7 +32,7 @@ class ProformController extends CI_Controller {
 			$cek = $this->Proform->insert($data);
 			$this->session->set_flashdata('info','Data Proform Berhasil Ditambahkan!');
 		} catch (Exception $e) {
-			$this->session->set_flashdata('info','Data Proform Gagal Ditambahkan!');
+			$this->session->set_flashdata('danger','Data Proform Gagal Ditambahkan!');
 		}
 		redirect('proform/index');
 	}
@@ -38,13 +40,17 @@ class ProformController extends CI_Controller {
 		$data['isi'] = $this->Proform->get()->result();
 		$data['title'] = 'Data Proform';
 		$data['jumlahData'] = $this->Proform->getCount();
+		$this->load->view('templates/header');
 		$this->load->view('proform/index',$data);
+		$this->load->view('templates/footer');
 	}
 	public function form_edit($id){
 		$data['isi'] 	= $this->Proform->detail($id)->row_array();
 		$data['title'] 	= 'Form Edit Data Proform';
 		$data['id'] 	= $id;
+		$this->load->view('templates/header');
 		$this->load->view('proform/form-edit',$data);
+		$this->load->view('templates/footer');
 	}
 	public function edit($id){
 		$data = [
@@ -58,7 +64,7 @@ class ProformController extends CI_Controller {
 			$cek = $this->Proform->update($data, $id);
 			$this->session->set_flashdata('info','Data Proform Berhasil Diubah!');
 		} catch (Exception $e) {
-			$this->session->set_flashdata('info','Data Proform Gagal Diubah!');
+			$this->session->set_flashdata('danger','Data Proform Gagal Diubah!');
 		}
 		redirect('proform/index');
 	}
@@ -74,6 +80,8 @@ class ProformController extends CI_Controller {
 	public function grafik(){
 		$data['isi'] = $this->Proform->data_grafik()->result();
 		$data['title'] = 'Grafik Data Proform';
+		$this->load->view('templates/header');
 		$this->load->view('proform/grafik',$data);
+		$this->load->view('templates/footer');
 	}
 }

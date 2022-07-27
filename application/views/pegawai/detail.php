@@ -1,4 +1,3 @@
-<?php require_once APPPATH.'views/templates/header.php'; ?>
 <div class="container-fluid">
 <table class="table table-bordered table-striped">
 	<tbody>
@@ -23,4 +22,3 @@
 </div>
 <br>
 <a href="<?php echo base_url('pegawai/index'); ?>" class="btn btn-default">Back</a>
-<?php require_once APPPATH.'views/templates/footer.php'; ?>
