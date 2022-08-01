@@ -34,9 +34,9 @@ class AbsensiController extends CI_Controller {
 		];
 		try {
 			$cek = $this->Absensi->insert($data);
-			if ($cek) {
+			// if ($cek) {
 				$this->session->set_flashdata('info','Data Absensi Berhasil Ditambahkan!');
-			}
+			// }
 		} catch (Exception $e) {
 			$cek_array = [
 				'id_pegawai' 	=> $id_pegawai,

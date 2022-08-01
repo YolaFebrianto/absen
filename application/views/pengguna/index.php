@@ -1,17 +1,3 @@
-<?php if($this->session->flashdata('info') != null): ?>
-<div class="alert alert-info alert-dismissible">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	<h4><i class="icon fa fa-info"></i> Alert!</h4>
-	<?=$this->session->flashdata('info');?>
-</div>
-<?php endif; ?>	
-<?php if($this->session->flashdata('danger') != null): ?>
-<div class="alert alert-danger alert-dismissible">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	<h4><i class="icon fa fa-ban"></i> Alert!</h4>
-	<?=$this->session->flashdata('danger');?>
-</div>
-<?php endif; ?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-3 col-sm-4 col-xs-6">
